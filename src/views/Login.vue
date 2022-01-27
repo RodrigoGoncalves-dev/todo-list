@@ -1,48 +1,24 @@
 <template>
-    <div>
-        <input
-            v-model="email"
-            type="email"
-            class="bg-gray-600 placeholder-gray-200 font-light border border-gray-900 focus:outline-none"
-        >
-        <input
-            v-model="password"
-            type="password"
-            class="bg-gray-600 placeholder-gray-200 font-light border border-gray-900 focus:outline-none"
-        >
-        <button @click.stop.p.prevent="login">
-            Clique
-        </button>
+    <div class="h-screen flex items-center justify-center bg-gray-900 content-center">
+        <div class="grid gap-2 w-80">
+            <p class="text-gray-50 text-xl font-medium mb-8 text-left">
+                Seja bem indo a melhor plataforma
+                <span class="text-gray-50 text-xl font-extrabold">
+                    de lista de tarefas!
+                </span>
+            </p>
+            <LoginCard />
+        </div>
     </div>
 </template>
 
 <script>
-    import Cookie from 'js-cookie';
+    import LoginCard from '@/components/LoginCard';
 
     export default {
-        name: 'Home',
+        name: 'Login',
         components: {
-
-        },
-        data() {
-            return {
-                email: '',
-                password: '',
-            };
-        },
-        methods: {
-            login(){
-                const payload = {
-                    email: this.email,
-                    password: this.password,
-                };
-
-                this.$axios.post('v1/login', payload).then((response) => {
-                    console.log(response);
-                    const token = `${response.data.token_type}${response.data.access_token}`;
-                    Cookie.set('_todolist_token', token, { expires: 30 });
-                });
-            },
+            LoginCard,
         },
     };
 </script>
