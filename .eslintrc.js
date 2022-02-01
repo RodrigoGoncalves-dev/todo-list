@@ -39,6 +39,9 @@ module.exports = {
             'extensions': ['vue'],
             'shouldMatchCase': false,
         }],
+        "vue/multi-word-component-names": ["error", {
+            "ignores": ["Login", 'About']
+        }],
         'import/no-absolute-path': 'error',
         'import/newline-after-import': 'error',
         'import/no-unresolved': ['error'],
