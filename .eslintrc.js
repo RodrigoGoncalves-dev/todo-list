@@ -40,7 +40,7 @@ module.exports = {
             'shouldMatchCase': false,
         }],
         "vue/multi-word-component-names": ["error", {
-            "ignores": ["Login", 'About']
+            "ignores": ["Login", 'About', 'Spinner']
         }],
         'import/no-absolute-path': 'error',
         'import/newline-after-import': 'error',
