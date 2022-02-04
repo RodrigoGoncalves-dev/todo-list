@@ -1,6 +1,6 @@
 <template>
     <div style="height: 300px">
-
+        <LoginMenu />
         <div
             v-if="response.message"
             :class="`rounded-sm bg-${response.color}-100 p-4 mb-4`"
@@ -25,7 +25,7 @@
                     <input
                         v-model="payload.email"
                         type="email"
-                        class="bg-gray-500 w-80 h-11 p-3 text-lg placeholder-gray-900 font-light border border-gray-500 rounded-sm focus:outline-none"
+                        class="bg-gray-800 w-96 h-11 p-5 text-gray-50 text-lg placeholder-gray-400 border border-gray-800 rounded-sm focus:outline-none"
                         placeholder="Digite seu e-mail"
                     >
                     <div
@@ -43,7 +43,7 @@
                     <input
                         v-model="payload.password"
                         type="password"
-                        class="bg-gray-500 w-80 h-11 p-3 text-lg placeholder-gray-900 font-light border border-gray-500 rounded-sm focus:outline-none"
+                        class="bg-gray-800 w-96 h-11 p-5 text-gray-50 text-lg placeholder-gray-400 border border-gray-800 rounded-sm focus:outline-none"
                         placeholder="Digite sua senha"
                     >
                     <div
@@ -55,8 +55,13 @@
                 </ValidationProvider>
                 <button
                     type="submit"
-                    class="bg-gray-700 hover:bg-gray-800 text-gray-50 font-bold h-11 rounded-sm mt-3"
+                    :disabled="spinner.login"
+                    class="bg-gray-700 flex items-center justify-center hover:bg-gray-800 text-gray-50 font-bold h-11 rounded-sm mt-3"
                 >
+                    <Spinner
+                        class="animate-spin w-5 h-5 mr-2"
+                        v-if="spinner.login"
+                    />
                     Acessar conta
                 </button>
                 <span class="text-gray-600 hover:text-gray-300 text-center mt-4 font-light">
@@ -68,15 +73,19 @@
 </template>
 
 <script>
-    import Cookie from 'js-cookie';
     import { ValidationObserver, ValidationProvider } from 'vee-validate';
+    import Cookie from 'js-cookie';
     import message from '@/utils/message';
+    import LoginMenu from '@/components/Login/LoginMenu';
+    import Spinner from '@/components/Spinner/Spinner';
 
     export default {
         name: 'LoginCard',
         components: {
+            Spinner,
             ValidationProvider,
             ValidationObserver,
+            LoginMenu,
         },
         data() {
             return {
@@ -87,6 +96,9 @@
                     message: '',
                 },
                 payload: {},
+                spinner: {
+                    login: false,
+                },
             };
         },
         methods: {
@@ -97,15 +109,17 @@
 
                 this.resetResponse();
 
+                this.spinner.login = true;
+
                 this.$axios.post('v1/login', this.payload).then((response) => {
-                    console.debug(response);
+
                     const token = `${response.data.token_type}${response.data.access_token}`;
                     Cookie.set('_todolist_token', token, { expires: 30 });
 
                     this.$store.commit('user/STORE_USER', response.data.data);
                 }).catch((e) => {
+                    this.spinner.login = false;
                     const errorCode = e?.response?.data?.error || 'ServerError';
-                    console.debug('error');
                     this.response.color = 'red';
                     this.response.message = message[errorCode];
                 });

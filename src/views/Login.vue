@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen flex items-center justify-center bg-gray-900 content-center">
-        <div class="grid gap-2 w-80">
+        <div class="grid gap-2 w-96">
             <p class="text-gray-50 text-xl font-medium mb-8 text-left">
                 Seja bem indo a melhor plataforma
                 <span class="text-gray-50 text-xl font-extrabold">
@@ -13,7 +13,7 @@
 </template>
 
 <script>
-    import LoginCard from '@/components/LoginCard';
+    import LoginCard from '@/components/Login/LoginCard';
 
     export default {
         name: 'Login',
