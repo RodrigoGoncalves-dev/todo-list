@@ -1,6 +1,6 @@
 <template>
     <div class="h-screen flex items-center justify-center bg-gray-900 content-center">
-        <div style="height: 300px;">
+        <div class="h-96 w-96">
             <LoginMenu />
 
             <div
@@ -19,7 +19,7 @@
             >
                 <div class="grid gap-2">
                     <div class="flex">
-                        <div class="w-1/2 mr-3">
+                        <div class="w-1/2 mr-4">
                             <ValidationProvider
                                 v-slot="{ errors }"
                                 rules="required"
@@ -39,7 +39,7 @@
                                 </div>
                             </ValidationProvider>
                         </div>
-                        <div class="w-1/2 ml-2">
+                        <div class="w-1/2 ml-4">
                             <input
                                 type="text"
                                 v-model="payload.last_name"
