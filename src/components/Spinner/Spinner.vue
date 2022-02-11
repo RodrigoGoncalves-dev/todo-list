@@ -1,8 +1,8 @@
 <template>
     <div>
         <img
-            :src='spinner'
-            alt='spinner'
+            :src="spinner"
+            alt="spinner"
         >
     </div>
 </template>
