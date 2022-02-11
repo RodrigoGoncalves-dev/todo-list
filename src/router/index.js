@@ -3,24 +3,42 @@ import VueRouter from 'vue-router';
 import Login from '../views/Login.vue';
 import RegisterCard from '@/components/Register/RegisterCard';
 import VerifyEmail from '@/views/VerifyEmail';
+import ForgotPassword from '@/views/ForgotPassword';
+import DefaultBackground from '@/components/DefaultBackground';
 
 Vue.use(VueRouter);
 
 const routes = [
   {
+    path: '/',
+    redirect: '/login',
+  },
+  {
     path: '/login',
-    name: 'Login',
-    component: Login,
+    component: DefaultBackground,
+    children: [
+      { path: '', name: 'login', component: Login },
+    ],
   },
   {
     path: '/registrar',
-    name: 'RegisterCard',
-    component: RegisterCard,
+    component: DefaultBackground,
+    children: [
+      { path: '', name: 'registerCard', component: RegisterCard },
+    ],
   },
   {
     path: '/verificar-email',
-    name: 'VerifyEmail',
-    component: VerifyEmail,
+    component: DefaultBackground,
+    children: [
+      { path: '', name: 'verifyEmail', component: VerifyEmail },
+    ],
+  },
+  {
+    path: '/esqueceu-senha', component: DefaultBackground,
+    children: [
+      { path: '', name: 'forgotPassword', component: ForgotPassword },
+    ],
   },
 ];
 
