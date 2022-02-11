@@ -1,5 +1,5 @@
 <template>
-    <div style="height: 300px">
+    <div class="h-72">
         <LoginMenu />
         <div
             v-if="response.message"
@@ -16,7 +16,6 @@
             @submit.stop.prevent="login"
         >
             <div class="grid gap-2">
-
                 <ValidationProvider
                     v-slot="{ errors }"
                     rules="required|email"
@@ -25,7 +24,7 @@
                     <input
                         v-model="payload.email"
                         type="email"
-                        class="bg-gray-800 w-96 h-11 p-5 text-gray-50 text-lg placeholder-gray-400 border border-gray-800 rounded-sm focus:outline-none"
+                        class="bg-gray-800 xxxsm:w-80 2xl:w-96 h-11 p-5 text-gray-50 text-lg placeholder-gray-400 border border-gray-800 rounded-sm focus:outline-none"
                         placeholder="Digite seu e-mail"
                     >
                     <div
@@ -42,8 +41,8 @@
                 >
                     <input
                         v-model="payload.password"
-                        type="password"
-                        class="bg-gray-800 w-96 h-11 p-5 text-gray-50 text-lg placeholder-gray-400 border border-gray-800 rounded-sm focus:outline-none"
+                        type="email"
+                        class="bg-gray-800 xxxsm:w-80 2xl:w-96 h-11 p-5 text-gray-50 text-lg placeholder-gray-400 border border-gray-800 rounded-sm focus:outline-none"
                         placeholder="Digite sua senha"
                     >
                     <div
@@ -64,9 +63,12 @@
                     />
                     Acessar conta
                 </button>
-                <span class="text-gray-600 hover:text-gray-300 text-center mt-4 font-light">
+                <RouterLink
+                    to="/esqueceu-senha"
+                    class="text-gray-600 hover:text-gray-300 text-center mt-4 font-light"
+                >
                     Esqueci minha senha
-                </span>
+                </RouterLink>
             </div>
         </ValidationObserver>
     </div>
@@ -89,8 +91,6 @@
         },
         data() {
             return {
-                email: '',
-                password: '',
                 response: {
                     color: '',
                     message: '',
@@ -117,6 +117,7 @@
                     Cookie.set('_todolist_token', token, { expires: 30 });
 
                     this.$store.commit('user/STORE_USER', response.data.data);
+                    this.spinner.login = false;
                 }).catch((e) => {
                     this.spinner.login = false;
                     const errorCode = e?.response?.data?.error || 'ServerError';

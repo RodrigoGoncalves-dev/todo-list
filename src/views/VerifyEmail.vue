@@ -1,13 +1,11 @@
 <template>
-    <div class="h-screen flex items-center justify-center bg-gray-900 content-center">
-        <div
-            v-if="response.message"
-            :class="`rounded-sm bg-${response.color}-100 p-4 mb-4`"
-        >
-            <h3 :class="`text-sm leading-5 font-medium text-${response.color}-800`">
-                {{ response.message }}
-            </h3>
-        </div>
+    <div
+        v-if="response.message"
+        :class="`rounded-sm bg-${response.color}-100 p-4 mb-4`"
+    >
+        <h3 :class="`text-sm leading-5 font-medium text-${response.color}-800`">
+            {{ response.message }}
+        </h3>
     </div>
 </template>
 
