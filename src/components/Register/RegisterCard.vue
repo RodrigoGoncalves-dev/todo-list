@@ -2,14 +2,10 @@
     <div class="h-72 xxxsm:w-80 2xl:w-96">
         <LoginMenu />
 
-        <div
-            v-if="response.message"
-            :class="`rounded-sm bg-${response.color}-100 p-4 mb-4`"
-        >
-            <h3 :class="`text-sm leading-5 font-medium text-${response.color}-800`">
-                {{ response.message }}
-            </h3>
-        </div>
+        <ResponseMessageComponent
+            :message="response.message"
+            :color="response.color"
+        />
 
         <ValidationObserver
             ref="registerForm"
@@ -24,27 +20,20 @@
                             rules="required"
                             name="nome"
                         >
-                            <input
-                                type="text"
+                            <InputComponent
                                 v-model="payload.first_name"
-                                class="bg-gray-800 xxxsm:w-36 sm:w-44 md:w-44 lg:w-44 xl:w-44 2xl:w-44 row-start-1 h-11 p-3 text-gray-50 text-lg placeholder-gray-400 font-light border border-gray-800 rounded-sm focus:outline-none"
+                                input-type="name"
                                 placeholder="Seu nome"
-                            >
-                            <div
-                                v-if="!!errors[0]"
-                                class="text-red-500 text-s mb-2"
-                            >
-                                {{ errors[0] }}
-                            </div>
+                            />
+                            <ValidateErrorComponent :error-message="errors"/>
                         </ValidationProvider>
                     </div>
                     <div class="w-1/2 ml-4">
-                        <input
-                            type="text"
+                        <InputComponent
                             v-model="payload.last_name"
-                            class="bg-gray-800 xxxsm:w-36 sm:w-44 md:w-44 lg:w-44 xl:w-44 2xl:w-44 row-start-1 h-11 p-3 text-gray-50 text-lg placeholder-gray-400 font-light border border-gray-800 rounded-sm focus:outline-none"
+                            input-type="email"
                             placeholder="Seu sobrenome"
-                        >
+                        />
                     </div>
                 </div>
                 <ValidationProvider
@@ -52,36 +41,24 @@
                     rules="required|email"
                     name="e-mail"
                 >
-                    <input
-                        type="email"
+                    <InputComponent
                         v-model="payload.email"
-                        class="bg-gray-800 xxxsm:w-80 sm:w-96 md:w-96 lg:w-96 xl:w-96 2xl:w-96 h-11 p-3 text-lg text-gray-50 placeholder-gray-400 font-light border border-gray-800 rounded-sm focus:outline-none"
+                        input-type="email"
                         placeholder="Digite seu e-mail"
-                    >
-                    <div
-                        v-if="!!errors[0]"
-                        class="text-red-500 text-s mb-2"
-                    >
-                        {{ errors[0] }}
-                    </div>
+                    />
+                    <ValidateErrorComponent :error-message="errors"/>
                 </ValidationProvider>
                 <ValidationProvider
                     v-slot="{ errors }"
                     :rules="{required: true, regex: /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d).+?/}"
                     name="senha"
                 >
-                    <input
-                        type="password"
+                    <InputComponent
                         v-model="payload.password"
-                        class="bg-gray-800 xxxsm:w-80 sm:w-96 md:w-96 lg:w-96 xl:w-96 2xl:w-96 h-11 p-3 text-lg text-gray-50 placeholder-gray-400 font-light border border-gray-800 rounded-sm focus:outline-none"
+                        input-type="password"
                         placeholder="Digite sua senha"
-                    >
-                    <div
-                        v-if="!!errors[0]"
-                        class="text-red-500 text-s mb-2"
-                    >
-                        {{ errors[0] }}
-                    </div>
+                    />
+                    <ValidateErrorComponent :error-message="errors"/>
                 </ValidationProvider>
                 <button
                     type="submit"
@@ -104,6 +81,9 @@
     import { ValidationObserver, ValidationProvider} from 'vee-validate';
     import Spinner from '@/components/Spinner/Spinner';
     import message from '@/utils/message';
+    import InputComponent from '@/components/Input/InputComponent';
+    import ResponseMessageComponent from '@/components/ResponseMessageComponent';
+    import ValidateErrorComponent from '@/components/ValidateErrorComponent';
 
     export default {
         name: 'RegisterCard',
@@ -112,6 +92,9 @@
             ValidationProvider,
             ValidationObserver,
             Spinner,
+            ResponseMessageComponent,
+            InputComponent,
+            ValidateErrorComponent,
         },
         data(){
             return {

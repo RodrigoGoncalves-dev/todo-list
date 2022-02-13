@@ -1,14 +1,11 @@
 <template>
     <div class="h-72">
         <LoginMenu />
-        <div
-            v-if="response.message"
-            :class="`rounded-sm bg-${response.color}-100 p-4 mb-4`"
-        >
-            <h3 :class="`text-sm leading-5 font-medium text-${response.color}-800`">
-                {{ response.message }}
-            </h3>
-        </div>
+
+        <ResponseMessageComponent
+            :message="response.message"
+            :color="response.color"
+        />
 
         <ValidationObserver
             ref="loginForm"
@@ -21,36 +18,24 @@
                     rules="required|email"
                     name="e-mail"
                 >
-                    <input
+                    <InputComponent
                         v-model="payload.email"
-                        type="email"
-                        class="bg-gray-800 xxxsm:w-80 2xl:w-96 h-11 p-5 text-gray-50 text-lg placeholder-gray-400 border border-gray-800 rounded-sm focus:outline-none"
+                        input-type="email"
                         placeholder="Digite seu e-mail"
-                    >
-                    <div
-                        v-if="!!errors[0]"
-                        class="text-red-500 text-s mb-2"
-                    >
-                        {{ errors[0] }}
-                    </div>
+                    />
+                    <ValidateErrorComponent :error-message="errors"/>
                 </ValidationProvider>
                 <ValidationProvider
                     v-slot="{ errors }"
                     rules="required"
                     name="senha"
                 >
-                    <input
+                    <InputComponent
                         v-model="payload.password"
-                        type="email"
-                        class="bg-gray-800 xxxsm:w-80 2xl:w-96 h-11 p-5 text-gray-50 text-lg placeholder-gray-400 border border-gray-800 rounded-sm focus:outline-none"
+                        input-type="password"
                         placeholder="Digite sua senha"
-                    >
-                    <div
-                        v-if="!!errors[0]"
-                        class="text-red-500 text-s mb-2"
-                    >
-                        {{ errors[0] }}
-                    </div>
+                    />
+                    <ValidateErrorComponent :error-message="errors"/>
                 </ValidationProvider>
                 <button
                     type="submit"
@@ -80,14 +65,20 @@
     import message from '@/utils/message';
     import LoginMenu from '@/components/Login/LoginMenu';
     import Spinner from '@/components/Spinner/Spinner';
+    import InputComponent from '@/components/Input/InputComponent';
+    import ValidateErrorComponent from '@/components/ValidateErrorComponent';
+    import ResponseMessageComponent from '@/components/ResponseMessageComponent';
 
     export default {
         name: 'LoginCard',
         components: {
             Spinner,
+            InputComponent,
             ValidationProvider,
             ValidationObserver,
             LoginMenu,
+            ValidateErrorComponent,
+            ResponseMessageComponent,
         },
         data() {
             return {
