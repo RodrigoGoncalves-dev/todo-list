@@ -1,20 +1,18 @@
 <template>
-    <div
-        v-if="response.message"
-        :class="`rounded-sm bg-${response.color}-100 p-4 mb-4`"
-    >
-        <h3 :class="`text-sm leading-5 font-medium text-${response.color}-800`">
-            {{ response.message }}
-        </h3>
-    </div>
+    <ResponseMessageComponent
+        :message="response.message"
+        :color="response.color"
+    />
 </template>
 
 <script>
     import message from '@/utils/message';
+    import ResponseMessageComponent from '@/components/ResponseMessageComponent';
 
     export default {
         name: 'VerifyEmail',
         components: {
+            ResponseMessageComponent,
         },
         data() {
             return {
